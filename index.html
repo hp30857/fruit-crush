@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>果果消消乐 — Fruit Crush · Steam 风格</title>
+<style>
+/* ===== Reset & Base ===== */
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#1b2838;
+  color:#c6d4df;
+  font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',Arial,Helvetica,sans-serif;
+  font-size:14px;line-height:1.5;
+  min-height:100vh;min-height:100dvh;
+}
+a{color:#66c0f4;text-decoration:none}
+a:hover{color:#a4d007}
+
+/* ===== Top Nav ===== */
+#global-nav{
+  background:#171a21;padding:0 24px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;height:56px;gap:24px;
+}
+.nav-logo{
+  font-size:16px;font-weight:800;color:#fff;
+  text-transform:uppercase;letter-spacing:1px;
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;
+}
+.nav-logo:hover{color:#66c0f4}
+.nav-logo .ico{font-size:22px}
+.nav-links{display:flex;gap:8px;list-style:none;flex:1}
+.nav-links a{
+  display:block;padding:8px 14px;border-radius:3px;
+  color:#b8b6b4;font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+  transition:all .2s;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.05)}
+
+/* ===== Lang Toggle ===== */
+.lang-toggle{
+  display:flex;align-items:center;gap:2px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:3px;padding:2px;cursor:pointer;transition:all .2s;
+}
+.lang-toggle:hover{border-color:rgba(102,192,244,.3)}
+.lang-opt{
+  padding:4px 10px;border-radius:2px;font-size:11px;font-weight:600;
+  transition:all .2s;color:rgba(255,255,255,.4);
+}
+.lang-opt.active{
+  background:#66c0f4;color:#171a21;
+}
+
+/* ===== Hero Section ===== */
+#hero{
+  background:linear-gradient(180deg,#1a2a3a 0%,#1b2838 40%,#1b2838 100%);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  padding:40px 24px 50px;
+  text-align:center;
+}
+.hero-grid{
+  max-width:1200px;margin:0 auto;
+  display:flex;flex-direction:column;align-items:center;
+  gap:32px;
+}
+.hero-info{display:flex;flex-direction:column;align-items:center;gap:16px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:3px;
+  background:rgba(102,192,244,.08);border:1px solid rgba(102,192,244,.15);
+  font-size:11px;color:#66c0f4;letter-spacing:1.5px;text-transform:uppercase;
+}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:#66c0f4}
+h1{
+  font-size:clamp(28px,4vw,40px);font-weight:700;color:#fff;
+  letter-spacing:1px;line-height:1.2;
+}
+.hero-desc{
+  color:#8f98a0;font-size:15px;line-height:1.7;max-width:480px;
+}
+.hero-meta{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.hero-tag{
+  padding:4px 12px;border-radius:3px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  font-size:12px;color:#8f98a0;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 36px;border-radius:3px;
+  background:linear-gradient(180deg,#a4d007,#6c9016);
+  color:#fff;font-size:15px;font-weight:700;text-decoration:none;
+  letter-spacing:1px;text-transform:uppercase;
+  transition:all .2s;border:none;cursor:pointer;
+}
+.hero-cta:hover{
+  background:linear-gradient(180deg,#b8e609,#7aa816);
+  color:#fff;transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(164,208,7,.2);
+}
+
+/* ===== Game Card (centered in hero) ===== */
+.game-card-wrapper{display:flex;justify-content:center}
+.game-card{
+  border-radius:4px;overflow:hidden;
+  background:#0e141b;border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+  transition:box-shadow .3s;
+}
+.game-card:hover{box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.game-card iframe{
+  display:block;width:420px;height:720px;border:none;
+  max-width:calc(100vw - 80px);
+  max-height:calc(100dvh - 240px);
+}
+
+/* ===== Section ===== */
+section{padding:60px 24px}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-header{margin-bottom:32px}
+.section-label{
+  display:inline-block;padding:4px 12px;border-radius:3px;
+  background:rgba(102,192,244,.06);border:1px solid rgba(102,192,244,.12);
+  font-size:10px;color:#66c0f4;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.section-title{
+  font-size:24px;font-weight:600;color:#fff;letter-spacing:.5px;
+}
+
+/* ===== Feature Cards ===== */
+.fgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.fcard{
+  background:linear-gradient(180deg,#16202d,#16202d);
+  border:1px solid rgba(255,255,255,.04);
+  border-radius:4px;padding:24px;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.fcard::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(102,192,244,.15),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.fcard:hover{
+  border-color:rgba(255,255,255,.08);
+  box-shadow:0 4px 20px rgba(0,0,0,.3);
+}
+.fcard:hover::after{opacity:1}
+.fcard-icon{font-size:32px;margin-bottom:14px;opacity:.9}
+.fcard h3{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
+.fcard p{font-size:13px;color:#8f98a0;line-height:1.6}
+
+/* ===== How to Play Steps ===== */
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.step{
+  background:#16202d;border:1px solid rgba(255,255,255,.04);
+  border-radius:4px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;
+  transition:all .2s;
+}
+.step:hover{border-color:rgba(102,192,244,.12)}
+.step-num{
+  width:36px;height:36px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:3px;font-weight:800;font-size:16px;color:#66c0f4;
+  background:rgba(102,192,244,.06);border:1px solid rgba(102,192,244,.12);
+}
+.step-text h4{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
+.step-text p{font-size:13px;color:#8f98a0;line-height:1.6}
+
+/* ===== Stats Bar ===== */
+.stats-bar{
+  display:flex;gap:4px;flex-wrap:wrap;
+  max-width:1200px;margin:0 auto 0;padding:0 24px 60px;
+}
+.stat-block{
+  flex:1;min-width:160px;text-align:center;
+  padding:24px 16px;border-radius:4px;
+  background:#16202d;border:1px solid rgba(255,255,255,.04);
+}
+.stat-block .num{
+  font-size:32px;font-weight:700;color:#fff;
+  background:linear-gradient(180deg,#fff,#c6d4df);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.stat-block .lbl{font-size:12px;color:#8f98a0;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+
+/* ===== Footer ===== */
+footer{
+  background:#171a21;border-top:1px solid rgba(255,255,255,.04);
+  padding:32px 24px;text-align:center;
+}
+footer p{font-size:12px;color:#8f98a0;letter-spacing:.5px}
+
+/* ===== Responsive ===== */
+@media(max-width:900px){
+  .hero-grid{gap:24px}
+  .game-card iframe{width:100%;height:600px;max-height:55vh}
+  .hero-desc{max-width:100%}
+  .nav-links{display:none}
+}
+
+/* ===== Contact Button & Modal ===== */
+.contact-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:3px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  color:#b8b6b4;font-size:12px;cursor:pointer;
+  transition:all .2s;letter-spacing:.5px;
+}
+.contact-btn:hover{color:#fff;border-color:rgba(102,192,244,.3);background:rgba(102,192,244,.06)}
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.6);justify-content:center;align-items:center;
+}
+.modal-overlay.show{display:flex}
+.modal-box{
+  background:#1b2838;border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;padding:32px 28px 24px;
+  text-align:center;max-width:400px;width:90%;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.modal-box h3{font-size:18px;color:#fff;margin-bottom:8px}
+.modal-box .email{
+  display:inline-block;margin:16px 0;
+  padding:12px 24px;border-radius:4px;
+  background:rgba(102,192,244,.08);border:1px solid rgba(102,192,244,.2);
+  color:#66c0f4;font-size:15px;font-weight:600;
+  letter-spacing:.5px;word-break:break-all;
+}
+.modal-box .close-btn{
+  display:inline-block;margin-top:12px;padding:8px 24px;border-radius:3px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  color:#c6d4df;font-size:13px;cursor:pointer;transition:all .2s;
+}
+.modal-box .close-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+
+@media(max-width:500px){
+  #global-nav{padding:0 12px}
+  .nav-inner{height:48px;gap:12px}
+  .nav-logo{font-size:14px}
+  #hero{padding:24px 12px 36px}
+  section{padding:36px 12px}
+  .fgrid{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .game-card iframe{height:500px;max-height:55vh}
+}
+</style>
+</head>
+<body>
+
+<!-- === Global Nav === -->
+<nav id="global-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="ico">🍑</span> Fruit Crush
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero" data-i18n="nav_home">首页</a></li>
+      <li><a href="#features" data-i18n="nav_features">特色</a></li>
+      <li><a href="#how" data-i18n="nav_how">玩法</a></li>
+    </ul>
+    <button class="contact-btn" onclick="showContact()" data-i18n="contact_btn">📧 联系我们</button>
+    <div class="lang-toggle" id="langToggle" onclick="toggleLang()">
+      <span class="lang-opt active" data-lang="zh">中文</span>
+      <span class="lang-opt" data-lang="en">English</span>
+    </div>
+  </div>
+</nav>
+
+<!-- === Hero + Game === -->
+<section id="hero">
+  <div class="hero-grid">
+    <div class="hero-info">
+      <div class="hero-badge"><span class="dot"></span> <span data-i18n="badge">休闲 · 消除 · 三消</span></div>
+      <h1>果果消消乐</h1>
+      <p class="hero-desc" data-i18n="desc">
+        经典三消玩法 × 水果收集 × 道具策略。100 个精心设计的关卡，从苹果园到终点山谷，每一步都充满乐趣和挑战。
+      </p>
+      <div class="hero-meta">
+        <span class="hero-tag">🗺️ <span data-i18n="meta1">100 关卡</span></span>
+        <span class="hero-tag">🍎 <span data-i18n="meta2">10 种水果</span></span>
+        <span class="hero-tag">💣 <span data-i18n="meta3">4 种道具</span></span>
+        <span class="hero-tag">⭐ <span data-i18n="meta4">3 星评价</span></span>
+        <span class="hero-tag">📱 <span data-i18n="meta5">手机可玩</span></span>
+      </div>
+      <a href="#hero" class="hero-cta" data-i18n="cta" onclick="document.querySelector('.game-card iframe').focus();return false">
+        ▶ 马 上 开 玩
+      </a>
+    </div>
+    <div class="game-card-wrapper">
+      <div class="game-card">
+        <iframe src="play.html" title="果果消消乐"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === Stats === -->
+<div class="stats-bar">
+  <div class="stat-block">
+    <div class="num">100</div>
+    <div class="lbl" data-i18n="st1">关卡</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">10</div>
+    <div class="lbl" data-i18n="st2">水果种类</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">4</div>
+    <div class="lbl" data-i18n="st3">道具类型</div>
+  </div>
+  <div class="stat-block">
+    <div class="num">3</div>
+    <div class="lbl" data-i18n="st4">星级评价</div>
+  </div>
+</div>
+
+<!-- === Features === -->
+<section id="features">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label" data-i18n="f_label">核心特色</div>
+      <h2 class="section-title" data-i18n="f_title">游戏特色</h2>
+    </div>
+    <div class="fgrid">
+      <div class="fcard">
+        <div class="fcard-icon">🗺️</div>
+        <h3 data-i18n="f1_title">100 个精心关卡</h3>
+        <p data-i18n="f1_desc">从苹果园到终点山谷，每关都有独特的名字、目标和难度曲线。关关不同，越玩越有挑战。</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">💣</div>
+        <h3 data-i18n="f2_title">四种强力道具</h3>
+        <p data-i18n="f2_desc">铲子、炸弹、冰冻、洗牌。策略搭配帮你突破难关，商店随时补给果汁货币。</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">🎯</div>
+        <h3 data-i18n="f3_title">双模式挑战</h3>
+        <p data-i18n="f3_desc">分数冲刺与水果收集并行，部分关卡需要同时达标，考验你的消除技巧与策略。</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">⭐</div>
+        <h3 data-i18n="f4_title">三星评价系统</h3>
+        <p data-i18n="f4_desc">剩余步数越多星级越高，收集全部三星称号，向着 100 关满分通关冲刺。</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">🎵</div>
+        <h3 data-i18n="f5_title">8-bit 合成音效</h3>
+        <p data-i18n="f5_desc">点击、交换、消除、连击、胜利都有合成器音效反馈，沉浸式消除体验。</p>
+      </div>
+      <div class="fcard">
+        <div class="fcard-icon">📱</div>
+        <h3 data-i18n="f6_title">移动端完美适配</h3>
+        <p data-i18n="f6_desc">触摸滑动交换水果，竖屏单手操作，随时随地来一局，进度浏览器本地保存。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === How to Play === -->
+<section id="how" style="background:rgba(0,0,0,.1)">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label" data-i18n="h_label">快速上手</div>
+      <h2 class="section-title" data-i18n="h_title">怎么玩</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text">
+          <h4 data-i18n="s1_title">交换相邻水果</h4>
+          <p data-i18n="s1_desc">点击或滑动交换两个相邻的水果，让三个或更多相同水果连成一线。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text">
+          <h4 data-i18n="s2_title">连锁消除得分</h4>
+          <p data-i18n="s2_desc">水果消除后下落填补空缺，新匹配自动触发连击，分数翻倍。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text">
+          <h4 data-i18n="s3_title">完成目标获胜</h4>
+          <p data-i18n="s3_desc">在步数或时间耗尽前达到目标分数、收集足够的水果即可通关。</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text">
+          <h4 data-i18n="s4_title">巧用道具破局</h4>
+          <p data-i18n="s4_desc">卡关时用道具打开局面，无解棋盘自动洗牌，永不卡死。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === Contact Modal === -->
+<div class="modal-overlay" id="contactModal" onclick="hideContact()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <h3 data-i18n="contact_title">联系我们</h3>
+    <p style="color:#8f98a0;font-size:13px" data-i18n="contact_sub">如有任何问题或合作意向，欢迎邮件联系</p>
+    <div class="email">243830857@qq.com</div>
+    <br>
+    <button class="close-btn" onclick="hideContact()" data-i18n="contact_close">关闭</button>
+  </div>
+</div>
+
+<!-- === Footer === -->
+<footer>
+  <p>© 2026 Fruit Crush · 果果消消乐 · 在浏览器中畅玩 · Steam 风格设计</p>
+</footer>
+
+<script>
+// ===== i18n =====
+var I18N = {
+  zh: {
+    contact_btn:'📧 联系我们',contact_title:'联系我们',contact_sub:'如有任何问题或合作意向，欢迎邮件联系',contact_close:'关闭',
+    nav_home:'首页',nav_features:'特色',nav_how:'玩法',
+    badge:'休闲 · 消除 · 三消',
+    desc:'经典三消玩法 × 水果收集 × 道具策略。100 个精心设计的关卡，从苹果园到终点山谷，每一步都充满乐趣和挑战。',
+    meta1:'100 关卡',meta2:'10 种水果',meta3:'4 种道具',meta4:'3 星评价',meta5:'手机可玩',
+    cta:'▶ 马 上 开 玩',
+    st1:'关卡',st2:'水果种类',st3:'道具类型',st4:'星级评价',
+    f_label:'核心特色',f_title:'游戏特色',
+    f1_title:'100 个精心关卡',f1_desc:'从苹果园到终点山谷，每关都有独特的名字、目标和难度曲线。关关不同，越玩越有挑战。',
+    f2_title:'四种强力道具',f2_desc:'铲子、炸弹、冰冻、洗牌。策略搭配帮你突破难关，商店随时补给果汁货币。',
+    f3_title:'双模式挑战',f3_desc:'分数冲刺与水果收集并行，部分关卡需要同时达标，考验你的消除技巧与策略。',
+    f4_title:'三星评价系统',f4_desc:'剩余步数越多星级越高，收集全部三星称号，向着 100 关满分通关冲刺。',
+    f5_title:'8-bit 合成音效',f5_desc:'点击、交换、消除、连击、胜利都有合成器音效反馈，沉浸式消除体验。',
+    f6_title:'移动端完美适配',f6_desc:'触摸滑动交换水果，竖屏单手操作，随时随地来一局，进度浏览器本地保存。',
+    h_label:'快速上手',h_title:'怎么玩',
+    s1_title:'交换相邻水果',s1_desc:'点击或滑动交换两个相邻的水果，让三个或更多相同水果连成一线。',
+    s2_title:'连锁消除得分',s2_desc:'水果消除后下落填补空缺，新匹配自动触发连击，分数翻倍。',
+    s3_title:'完成目标获胜',s3_desc:'在步数或时间耗尽前达到目标分数、收集足够的水果即可通关。',
+    s4_title:'巧用道具破局',s4_desc:'卡关时用道具打开局面，无解棋盘自动洗牌，永不卡死。'
+  },
+  en: {
+    contact_btn:'📧 Contact',contact_title:'Contact Us',contact_sub:'For any questions or collaboration inquiries, feel free to reach out via email',contact_close:'Close',
+    nav_home:'Home',nav_features:'Features',nav_how:'How to Play',
+    badge:'CASUAL · PUZZLE · MATCH-3',
+    desc:'Classic match-3 gameplay × fruit collection × power-up strategy. 100 handcrafted levels from Apple Orchard to Final Valley — every step is packed with fun and challenge.',
+    meta1:'100 Levels',meta2:'10 Fruits',meta3:'4 Power-ups',meta4:'3-Star Rating',meta5:'Mobile',
+    cta:'▶ PLAY NOW',
+    st1:'Levels',st2:'Fruit Types',st3:'Power-ups',st4:'Star Ratings',
+    f_label:'Core Features',f_title:'Game Features',
+    f1_title:'100 Handcrafted Levels',f1_desc:'From Apple Orchard to Final Valley, each level features a unique name, target, and difficulty curve. Every level is different.',
+    f2_title:'Four Powerful Items',f2_desc:'Shovel, Bomb, Freeze, and Shuffle. Mix and match strategically to break through tough levels. Shop always stocked with juice currency.',
+    f3_title:'Dual Challenge Modes',f3_desc:'Score rush and fruit collection run in parallel. Some levels require both targets — testing your matching skills and strategy.',
+    f4_title:'Three-Star Rating System',f4_desc:'More remaining moves means higher stars. Collect all three-star badges and aim for a perfect 100-level clear.',
+    f5_title:'8-Bit Synthesizer SFX',f5_desc:'Synthesizer audio feedback for taps, swaps, clears, combos, and victories. An immersive matching experience.',
+    f6_title:'Mobile Perfectly Adapted',f6_desc:'Touch and swipe to swap fruits. Portrait one-hand operation. Play anytime, anywhere. Progress saved locally.',
+    h_label:'Quick Start',h_title:'How to Play',
+    s1_title:'Swap Adjacent Fruits',s1_desc:'Tap or swipe to swap two adjacent fruits, lining up three or more identical fruits in a row.',
+    s2_title:'Chain Combos for Points',s2_desc:'After matching, fruits clear and new ones drop in. New matches auto-trigger combos for doubled scores.',
+    s3_title:'Complete the Objective',s3_desc:'Reach the target score or collect enough target fruits before running out of moves or time to clear the level.',
+    s4_title:'Use Items Strategically',s4_desc:'Use items to break through when stuck. Unsolvable boards auto-shuffle — you never get soft-locked.'
+  }
+};
+var currentLang = 'zh';
+
+function showContact(){document.getElementById('contactModal').classList.add('show')}
+function hideContact(){document.getElementById('contactModal').classList.remove('show')}
+
+function toggleLang(){
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  document.querySelectorAll('.lang-opt').forEach(function(el){
+    el.classList.toggle('active', el.dataset.lang === currentLang);
+  });
+  applyLang();
+  try{localStorage.setItem('fc_site_lang',currentLang)}catch(e){}
+}
+function applyLang(){
+  var dict = I18N[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    if(dict[el.dataset.i18n]) el.textContent = dict[el.dataset.i18n];
+  });
+}
+try{var s=localStorage.getItem('fc_site_lang');if(s&&I18N[s])currentLang=s}catch(e){}
+(function init(){
+  document.querySelectorAll('.lang-opt').forEach(function(el){
+    el.classList.toggle('active', el.dataset.lang === currentLang);
+  });
+  applyLang();
+})();
+</script>
+
+</body>
+</html>
